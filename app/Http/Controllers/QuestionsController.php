@@ -27,7 +27,7 @@ class QuestionsController extends Controller
      */
     public function create()
     {
-        $question = Question::all();
+        $question = new Question();
         return view('questions.create', compact('question'));
     }
 
@@ -53,7 +53,9 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        $question->increment('views');
+        
+        return view('questions.show', compact('question'));
     }
 
     /**
@@ -64,7 +66,11 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        return view('questions.edit', compact('question'));
+         if (\Gate::allows('update-question', $question)) {
+             return view('questions.edit', compact('question'));
+         }
+
+         abort(403, 'Acess denied!');
     }
 
     /**
@@ -74,9 +80,11 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
-        //
+        $question->update($request->only('title', 'body'));
+
+        return redirect()->route('questions.index')->with('success', 'Your question has been updated.');
     }
 
     /**
@@ -87,6 +95,12 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        if (\Gate::allows('delete-question', $question)) {
+            $question->delete();
+            return redirect()->route('questions.index')->with('success', 'Your question has been deleted.');
+        }
+
+        abort(403, 'Access denied!');
+
     }
 }

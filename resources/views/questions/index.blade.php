@@ -34,7 +34,20 @@
                                 <h2>
                                     <a href="{{ $question->url }}">{{ $question->title }}</a>
                                 </h2>
-                                <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                                <div>
+
+                                    @if (auth()->user()->can('update-question', $question))
+                                        <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                                    @endif
+
+                                    @if(auth()->user()->can('delete-question', $question))
+                                        <form action="{{ route('questions.destroy', $question->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form>
+                                    @endif
+                                </div>
                             </div>
                             <p class="lead">
                                 <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
