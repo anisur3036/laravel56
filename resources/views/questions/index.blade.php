@@ -23,7 +23,7 @@
                                 <strong>{{ $question->votes }}</strong> {{ str_plural('vote', $question->votes) }}
                             </div>
                             <div class="status {{ $question->status }}">
-                                <strong>{{ $question->answers }}</strong> {{ str_plural('answer', $question->answers) }}
+                                <strong>{{ $question->answers_count }}</strong> {{ str_plural('answer', $question->answers_count) }}
                             </div>
                             <div class="view">
                                 {{ $question->views }}  {{ str_plural('view', $question->views) }}
@@ -34,19 +34,17 @@
                                 <h2>
                                     <a href="{{ $question->url }}">{{ $question->title }}</a>
                                 </h2>
-                                <div>
-
-                                    @if (auth()->user()->can('update-question', $question))
+                                <div class="ml-auto">
+                                    @can ('update', $question)
                                         <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
-                                    @endif
-
-                                    @if(auth()->user()->can('delete-question', $question))
-                                        <form action="{{ route('questions.destroy', $question->id) }}" method="post">
-                                            @csrf
+                                    @endcan
+                                    @can ('delete', $question)
+                                        <form class="form-delete" method="post" action="{{ route('questions.destroy', $question->id) }}">
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                         </form>
-                                    @endif
+                                    @endcan
                                 </div>
                             </div>
                             <p class="lead">
