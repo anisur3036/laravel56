@@ -41,4 +41,34 @@
       color: $color-white;
     }
   }
+
+}
+.vote-controls {
+  text-align: center;
+  a.vote-up {
+    cursor: pointer;
+    color: $gray-700;
+  }
+  a.vote-down {
+    cursor: pointer;
+    color: $gray-300;
+  }
+  span.vote-count {
+    font-size: 1.5rem;
+  }
+  a.favorite {
+    color: lighten(orange,15%);
+    cursor: pointer;
+    &:hover {
+      color: lighten($color: orange, $amount: 0%); 
+    }
+  }
+  a.accepted {
+    color: green; 
+    cursor: pointer;
+    &:hover {
+      color: green;
+    }
+    
+  }
 }

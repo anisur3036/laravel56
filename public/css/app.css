@@ -11967,3 +11967,39 @@ a.text-dark:focus {
   color: #ffffff;
 }
 
+.vote-controls {
+  text-align: center;
+}
+
+.vote-controls a.vote-up {
+  cursor: pointer;
+  color: #495057;
+}
+
+.vote-controls a.vote-down {
+  cursor: pointer;
+  color: #dee2e6;
+}
+
+.vote-controls span.vote-count {
+  font-size: 1.5rem;
+}
+
+.vote-controls a.favorite {
+  color: #ffc04d;
+  cursor: pointer;
+}
+
+.vote-controls a.favorite:hover {
+  color: orange;
+}
+
+.vote-controls a.accepted {
+  color: green;
+  cursor: pointer;
+}
+
+.vote-controls a.accepted:hover {
+  color: green;
+}
+
