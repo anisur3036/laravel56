@@ -11994,12 +11994,16 @@ a.text-dark:focus {
   color: orange;
 }
 
-.vote-controls a.accepted {
-  color: green;
+.vote-controls a.answer {
+  color: #dee2e6;
   cursor: pointer;
 }
 
-.vote-controls a.accepted:hover {
+.vote-controls a.answer.accepted {
+  color: green;
+}
+
+.vote-controls a.answer.accepted:hover {
   color: green;
 }
 

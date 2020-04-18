@@ -63,9 +63,12 @@
       color: lighten($color: orange, $amount: 0%); 
     }
   }
-  a.accepted {
-    color: green; 
+  a.answer {
+    color: $gray-300;
     cursor: pointer;
+  }
+  a.answer.accepted {
+    color: green; 
     &:hover {
       color: green;
     }
