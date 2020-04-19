@@ -21,10 +21,14 @@
                             <a title="This question is not usefull" class="vote-down">
                                 <i class="fas fa-caret-down fa-2x"></i>
                             </a>
-                            <a title="Click to mark as favorite" class="favorite">
+                            <a title="Click to mark as favorite" class="favorite {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited' : '') }}"
+                                onclick="event.preventDefault(); document.getElementById('favorite-{{ $question->id }}').submit()">
                                 <i class="fas fa-star"></i>
                             </a>
-                            <span class="favorite-count">123</span>
+                            <form action="{{ route('questions.favorite', $question->id) }}" id="favorite-{{ $question->id }}" method="post" style="display:none">
+                                @csrf
+                            </form>
+                            <span class="favorite-count">{{ $question->favorites_count }}</span>
                         </div>
                         <div class="media-body">
                             {!! $question->body_html !!}

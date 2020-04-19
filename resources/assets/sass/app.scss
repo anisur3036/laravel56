@@ -56,12 +56,15 @@
   span.vote-count {
     font-size: 1.5rem;
   }
-  a.favorite {
-    color: lighten(orange,15%);
+  .favorite {
     cursor: pointer;
-    &:hover {
-      color: lighten($color: orange, $amount: 0%); 
-    }
+    color: $gray-300;
+  }
+  .favorite.off {
+    color: $gray-300;
+  }
+  .favorite.favorited {
+    color: orange;
   }
   a.answer {
     color: $gray-300;

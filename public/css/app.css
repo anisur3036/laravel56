@@ -11985,12 +11985,16 @@ a.text-dark:focus {
   font-size: 1.5rem;
 }
 
-.vote-controls a.favorite {
-  color: #ffc04d;
+.vote-controls .favorite {
   cursor: pointer;
+  color: #dee2e6;
 }
 
-.vote-controls a.favorite:hover {
+.vote-controls .favorite.off {
+  color: #dee2e6;
+}
+
+.vote-controls .favorite.favorited {
   color: orange;
 }
 
