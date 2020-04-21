@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function voteAnswers()
     {
-        return $this->morphedByMany(Answer::class, 'votable');
+        return $this->morphedByMany(Answer::class, 'votable')->withTimestamps();
     }
 
     public function voteQuestion(Question $question, $vote)
@@ -70,6 +70,23 @@ class User extends Authenticatable
         $question->save();
     }
 
+    public function voteAnswer(Answer $answer, $vote)
+    {
+        $voteAnswers = $this->voteAnswers();
+        if ($voteAnswers->where('votable_id', $answer->id)->exists())
+        {
+            $voteAnswers->updateExistingPivot($answer, ['vote'=> $vote]);
+        } else {
+            $voteAnswers->attach($answer, ['vote' => $vote]);
+        }
+
+        $answer->load('votes');
+        $upVotes = (int) $answer->upVotes()->sum('vote');
+        $downVotes = (int) $answer->downVotes()->sum('vote');
+
+        $answer->votes_count = $upVotes + $downVotes;
+        $answer->save();
+    }
     public function getUrlAttribute()
     {
         // return route('users.show', $this->id);

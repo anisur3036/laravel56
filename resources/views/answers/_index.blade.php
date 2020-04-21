@@ -9,13 +9,25 @@
                 @foreach ($question->answers as $answer)
                 <div class="media">
                     <div class="d-flex flex-column mr-4 vote-controls">
-                        <a title="This answer is usefull" class="vote-up">
+                        <a title="This answer is usefull" class="vote-up {{ Auth::guest() ? 'off' : '' }}"
+                        onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{ $answer->id }}').submit()"
+                        >
                             <i class="fas fa-caret-up fa-2x"></i>
                         </a>
-                        <span class="vote-count">123</span>
-                        <a title="This answer is not usefull" class="vote-down">
+                        <form action="{{ route('answers.vote', $answer->id) }}" id="up-vote-answer-{{ $answer->id }}" method="post" style="display:none">
+                            @csrf
+                            <input type="hidden" name="vote" value="1">
+                        </form>
+                        <span class="vote-count">{{ $answer->votes_count }}</span>
+                        <a title="This answer is not usefull" class="vote-down {{ Auth::guest() ? 'off' : '' }}"
+                        onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{ $answer->id }}').submit()"
+                        >
                             <i class="fas fa-caret-down fa-2x"></i>
                         </a>
+                        <form action="{{ route('answers.vote', $answer->id) }}" id="down-vote-answer-{{ $answer->id }}" method="post" style="display:none">
+                            @csrf
+                            <input type="hidden" name="vote" value="-1">
+                        </form>
                         @can ('accept', $answer)
                             <a title="Click to mark as accepted answer." class="answer {{ $answer->best_answer }}"
                                 onclick="event.preventDefault(); document.getElementById('accepted-answer-{{ $answer->id }}').submit();"
